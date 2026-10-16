@@ -1,60 +1,48 @@
-# AI Stats Skills
+# Phaseo Skills
 
-Public installable skills for the AI Stats ecosystem.
+Agent skills for building on [Phaseo](https://phaseo.app), the AI gateway that gives you one API for many model providers.
 
-[![skills.sh](https://skills.sh/b/AI-Stats/skills)](https://skills.sh/AI-Stats/skills)
-
-This repository is intended to be published as its own standalone skills source for [`skills.sh`](https://skills.sh/) and compatible coding agents.
+[![skills.sh](https://skills.sh/b/phaseoteam/skills)](https://skills.sh/phaseoteam/skills)
 
 ## Install
 
-Canonical public source:
-
-```text
-AI-Stats/skills
-```
-
-List available skills:
+From this repository:
 
 ```bash
-npx skills add AI-Stats/skills --list
+npx skills add phaseoteam/skills
 ```
 
-Install all public AI Stats skills for Codex:
+Or from the Phaseo docs, which serve the same skills:
 
 ```bash
-npx skills add AI-Stats/skills --agent codex --skill '*'
+npx skills add https://phaseo.app/docs
 ```
 
-Install one specific skill:
+List the skills without installing, or install every skill for one agent:
 
 ```bash
-npx skills add AI-Stats/skills --agent codex --skill ai-stats-gateway
+npx skills add phaseoteam/skills --list
+npx skills add phaseoteam/skills --agent codex --skill '*'
 ```
 
-## Available skills
+## Skills
 
-- `ai-stats-gateway`
-- `ai-stats-guardrails`
-- `ai-stats-response-healing`
-- `ai-stats-web-search-tools`
-- `ai-stats-async-webhooks`
-- `ai-stats-routing-presets`
-- `ai-stats-sdk-typescript`
-- `ai-stats-sdk-python`
-- `ai-stats-agent-sdk-typescript`
-- `openrouter-to-ai-stats-migration`
+| Skill | Use it to |
+| --- | --- |
+| `phaseo-gateway` | Integrate or migrate to the Phaseo Gateway over REST, the TypeScript or Python SDK, or the Vercel AI SDK. |
+| `phaseo-sdk-typescript` | Use the TypeScript and JavaScript SDK, `@phaseo/sdk`. |
+| `phaseo-sdk-python` | Use the Python SDK, `phaseo`. |
+| `phaseo-agent-sdk-typescript` | Build agent loops with the TypeScript Agent SDK, `@phaseo/agent-sdk`. |
+| `openrouter-to-phaseo-migration` | Move an existing OpenRouter integration to Phaseo. |
+| `phaseo-routing-presets` | Roll out and debug presets, routing policy and response caching. |
+| `phaseo-guardrails` | Configure and debug guardrails for API keys. |
+| `phaseo-async-webhooks` | Build async video, batch and webhook integrations. |
+| `phaseo-web-search-tools` | Configure web search and web fetch grounding. |
+| `phaseo-response-healing` | Recover structured JSON output with response healing. |
+| `phaseo-cli` | Operate Phaseo through the `phaseo` CLI. |
 
-## Repository shape
+## Where these come from
 
-This repository intentionally contains only public AI Stats skills under `skills/<skill-name>/SKILL.md`.
+The skills are maintained in the [Phaseo repository](https://github.com/phaseoteam/Phaseo/tree/main/.agents/skills) and published with the [Phaseo docs](https://phaseo.app/docs). The [sync workflow](.github/workflows/sync.yml) copies them here every day, so do not edit `skills/` in this repository; changes belong in the Phaseo repository.
 
-Internal or workflow-specific helper skills remain in the main product repository and are not part of this public distribution surface.
-
-## Local validation
-
-From the repository root:
-
-```bash
-npx skills add . --list --agent codex
-```
+Documentation: https://phaseo.app/docs

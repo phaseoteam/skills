@@ -73,4 +73,6 @@ The skills are maintained in the [Phaseo repository](https://github.com/phaseote
 
 Documentation: https://phaseo.app/docs
 
+## License
 
+MIT. See [LICENSE](LICENSE).

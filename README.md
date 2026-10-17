@@ -72,3 +72,5 @@ The plugin also includes `phaseo`, a skill for the Phaseo MCP tools.
 The skills are maintained in the [Phaseo repository](https://github.com/phaseoteam/Phaseo/tree/main/.agents/skills) and published with the [Phaseo docs](https://phaseo.app/docs); the plugin lives in [`apps/mcp/plugin/phaseo`](https://github.com/phaseoteam/Phaseo/tree/main/apps/mcp/plugin/phaseo). The [sync workflow](.github/workflows/sync.yml) copies both here every day, so do not edit `skills/` or `plugins/` in this repository; changes belong in the Phaseo repository. The marketplace files in `.claude-plugin/` and `.agents/plugins/` are maintained here.
 
 Documentation: https://phaseo.app/docs
+
+

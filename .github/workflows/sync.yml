@@ -1,0 +1,53 @@
+# Copy the published Phaseo skills and the Phaseo plugin from the Phaseo repository.
+# The source of truth is phaseoteam/Phaseo:
+#   - skills: .agents/skills, published to apps/docs/.mintlify/skills by scripts/skills/sync.mjs
+#     (the same files https://phaseo.app/docs serves);
+#   - plugin: apps/mcp/plugin/phaseo (Claude Code, Codex and ChatGPT).
+# The marketplace files in .claude-plugin/ and .agents/plugins/ belong to this repository.
+name: Sync skills and plugin from Phaseo
+
+on:
+  schedule:
+    - cron: "17 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: sync-skills
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Fetch the published skills and plugin from phaseoteam/Phaseo
+        run: |
+          git clone --filter=blob:none --sparse --no-checkout https://github.com/phaseoteam/Phaseo.git "$RUNNER_TEMP/phaseo"
+          git -C "$RUNNER_TEMP/phaseo" sparse-checkout set apps/docs/.mintlify/skills apps/mcp/plugin/phaseo
+          git -C "$RUNNER_TEMP/phaseo" checkout main
+          test -f "$RUNNER_TEMP/phaseo/apps/docs/.mintlify/skills/phaseo-gateway/SKILL.md"
+          test -f "$RUNNER_TEMP/phaseo/apps/mcp/plugin/phaseo/.claude-plugin/plugin.json"
+          echo "SOURCE_SHA=$(git -C "$RUNNER_TEMP/phaseo" rev-parse --short HEAD)" >> "$GITHUB_ENV"
+
+      - name: Replace skills/ and plugins/phaseo with the published copies
+        run: |
+          rm -rf skills plugins/phaseo
+          mkdir -p skills plugins
+          cp -R "$RUNNER_TEMP/phaseo/apps/docs/.mintlify/skills/." skills/
+          cp -R "$RUNNER_TEMP/phaseo/apps/mcp/plugin/phaseo" plugins/phaseo
+
+      - name: Commit changes
+        run: |
+          if [ -z "$(git status --porcelain -- skills plugins)" ]; then
+            echo "Skills and plugin already match phaseoteam/Phaseo@$SOURCE_SHA."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A skills plugins
+          git commit -m "Sync skills and plugin from phaseoteam/Phaseo@$SOURCE_SHA"
+          git push

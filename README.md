@@ -1,60 +1,78 @@
-# AI Stats Skills
+# Phaseo Skills
 
-Public installable skills for the AI Stats ecosystem.
+Agent skills and the Phaseo plugin for building on [Phaseo](https://phaseo.app), the AI gateway that gives you one API for many model providers.
 
-[![skills.sh](https://skills.sh/b/AI-Stats/skills)](https://skills.sh/AI-Stats/skills)
+[![skills.sh](https://skills.sh/b/phaseoteam/skills)](https://skills.sh/phaseoteam/skills)
 
-This repository is intended to be published as its own standalone skills source for [`skills.sh`](https://skills.sh/) and compatible coding agents.
+## Install the plugin
 
-## Install
+The Phaseo plugin bundles every skill below, the Phaseo MCP (live models, pricing and usage for your account) and the Phaseo Docs MCP.
 
-Canonical public source:
-
-```text
-AI-Stats/skills
-```
-
-List available skills:
+Claude Code:
 
 ```bash
-npx skills add AI-Stats/skills --list
+claude plugin marketplace add phaseoteam/skills
+claude plugin install phaseo@phaseo
 ```
 
-Install all public AI Stats skills for Codex:
+Or, inside Claude Code: `/plugin install phaseo --marketplace phaseoteam/skills`. Then run `/mcp` and sign in to `plugin:phaseo:phaseo`.
+
+Codex:
 
 ```bash
-npx skills add AI-Stats/skills --agent codex --skill '*'
+codex plugin marketplace add phaseoteam/skills
+codex plugin add phaseo@phaseo
+codex mcp login phaseo
 ```
 
-Install one specific skill:
+## Install only the skills
+
+For any agent that supports skills:
 
 ```bash
-npx skills add AI-Stats/skills --agent codex --skill ai-stats-gateway
+npx skills add phaseoteam/skills
 ```
 
-## Available skills
-
-- `ai-stats-gateway`
-- `ai-stats-guardrails`
-- `ai-stats-response-healing`
-- `ai-stats-web-search-tools`
-- `ai-stats-async-webhooks`
-- `ai-stats-routing-presets`
-- `ai-stats-sdk-typescript`
-- `ai-stats-sdk-python`
-- `ai-stats-agent-sdk-typescript`
-- `openrouter-to-ai-stats-migration`
-
-## Repository shape
-
-This repository intentionally contains only public AI Stats skills under `skills/<skill-name>/SKILL.md`.
-
-Internal or workflow-specific helper skills remain in the main product repository and are not part of this public distribution surface.
-
-## Local validation
-
-From the repository root:
+Or from the Phaseo docs, which serve the same skills:
 
 ```bash
-npx skills add . --list --agent codex
+npx skills add https://phaseo.app/docs
 ```
+
+List the skills without installing, or install every skill for one agent:
+
+```bash
+npx skills add phaseoteam/skills --list
+npx skills add phaseoteam/skills --agent codex --skill '*'
+```
+
+## Skills
+
+| Skill | Use it to |
+| --- | --- |
+| `phaseo-gateway` | Integrate with the Phaseo Gateway over REST, the TypeScript or Python SDK, or the Vercel AI SDK. |
+| `phaseo-migration` | Move from OpenAI, Anthropic, OpenRouter, Vercel AI Gateway, LiteLLM, Cloudflare AI Gateway, Helicone or LLM Gateway. |
+| `openrouter-to-phaseo-migration` | Move an OpenRouter integration in depth. |
+| `phaseo-model-selection` | Choose and pin model IDs by capability, context, price and lifecycle. |
+| `phaseo-usage-monitoring` | Track credits and spend, and debug a request's cost or failure. |
+| `phaseo-sdk-typescript` | Use the TypeScript and JavaScript SDK, `@phaseo/sdk`. |
+| `phaseo-sdk-python` | Use the Python SDK, `phaseo`. |
+| `phaseo-agent-sdk-typescript` | Build agent loops with the TypeScript Agent SDK, `@phaseo/agent-sdk`. |
+| `phaseo-routing-presets` | Roll out and debug presets, routing policy and response caching. |
+| `phaseo-guardrails` | Configure and debug guardrails for API keys. |
+| `phaseo-async-webhooks` | Build async video, batch and webhook integrations. |
+| `phaseo-web-search-tools` | Configure web search and web fetch grounding. |
+| `phaseo-response-healing` | Recover structured JSON output with response healing. |
+| `phaseo-cli` | Operate Phaseo through the `phaseo` CLI. |
+
+The plugin also includes `phaseo`, a skill for the Phaseo MCP tools.
+
+## Where these come from
+
+The skills are maintained in the [Phaseo repository](https://github.com/phaseoteam/Phaseo/tree/main/.agents/skills) and published with the [Phaseo docs](https://phaseo.app/docs); the plugin lives in [`apps/mcp/plugin/phaseo`](https://github.com/phaseoteam/Phaseo/tree/main/apps/mcp/plugin/phaseo). The [sync workflow](.github/workflows/sync.yml) copies both here every day, so do not edit `skills/` or `plugins/` in this repository; changes belong in the Phaseo repository. The marketplace files in `.claude-plugin/` and `.agents/plugins/` are maintained here.
+
+Documentation: https://phaseo.app/docs
+
+## License
+
+MIT. See [LICENSE](LICENSE).
